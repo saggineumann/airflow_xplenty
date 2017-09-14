@@ -2,7 +2,7 @@ import os
 import time
 from client_factory import ClientFactory
 
-class XplentyJob:
+class Job:
     FINAL_STATUSES = ['completed', 'failed', 'stopped']
 
     def __init__(self, cluster_id, package_id):
