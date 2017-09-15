@@ -1,12 +1,16 @@
 import unittest
+from airflow.configuration import conf
 from mock import MagicMock
 from mock import Mock
 from airflow_xplenty.operators import XplentyJobOperator
 
 class XplentyJobOperatorTestCase(unittest.TestCase):
     def setUp(self):
-        self.operator = XplentyJobOperator(account_id='TestAccount',
-            api_key='TestKey', package_name='test_package', task_id='test')
+        if not conf.has_section('xplenty'): conf.add_section('xplenty')
+        conf.set('xplenty', 'account_id', 'TestAccount')
+        conf.set('xplenty', 'api_key', 'TestKey')
+
+        self.operator = XplentyJobOperator(package_name='test_package', task_id='test')
 
         cluster = Mock(id=42)
         self.operator.cluster_factory.find_or_start = MagicMock(return_value=cluster)
@@ -15,10 +19,6 @@ class XplentyJobOperatorTestCase(unittest.TestCase):
         self.operator.package_finder.find = MagicMock(return_value=package)
 
         self.operator.job_manager.run = MagicMock()
-
-    def test_constructor_client(self):
-        self.assertEqual(self.operator.client.account_id, 'TestAccount')
-        self.assertEqual(self.operator.client.api_key, 'TestKey')
 
     def test_execute_lazily_start_cluster(self):
         self.operator.execute({})

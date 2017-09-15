@@ -2,6 +2,20 @@
 
 Airflow plugin wrappers for the Xplenty API.
 
+## Configuration
+
+Add your Xplenty API credentials to `airflow.cfg` in an `xplenty` section, e.g.
+
+```ini
+[xplenty]
+account_id = $XPLENTY_ACCOUNT_ID
+api_key = $XPLENTY_API_KEY
+```
+
+In the example above, Airflow will read the `account_id` and `api_key` from the
+environment variables `XPLENTY_ACCOUNT_ID` and `XPLENTY_API_KEY`, which
+obviates the need to store these sensitive credentials in the app.
+
 ## Operators
 
 ### `XplentyJobOperator`
@@ -16,8 +30,6 @@ In addition to the standard (BaseOperator arguments)[https://airflow.incubator.a
 
 |   Argument   |   Type   | Required | Description |
 |:------------ |:-------- |:-------- |:----------- |
-| account_id   | `String` | False    | The Xplenty account ID (defaults to the environment variable `XPLENTY_ACCOUNT_ID`) |
-| api_key      | `String` | False    | The Xplenty API key (defaults to the environment variable `XPLENTY_API_KEY`) |
 | env          | `String` | False    | The environment the cluster will be lazily started (default `sandbox`) |
 | package_name | `String` | True     | The name of the package to run |
 
@@ -28,10 +40,6 @@ from airflow_xplenty.operators import XplentyJobOperator
 
 dag = DAG('test', schedule_interval='@daily')
 
-XplentyJobOperator(task_id='run_test',
-    accont_id='TestAccount',
-    api_key='TestKey',
-    env='production',
-    package_name='test_package',
-    dag=dag)
+XplentyJobOperator(task_id='run_test', env='production',
+    package_name='test_package', dag=dag)
 ```

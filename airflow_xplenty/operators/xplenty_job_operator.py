@@ -8,8 +8,8 @@ from airflow_xplenty.package_finder import PackageFinder
 
 class XplentyJobOperator(BaseOperator):
     @apply_defaults
-    def __init__(self, package_name, env='sandbox', account_id=None, api_key=None, **kwargs):
-        self.client = ClientFactory(account_id, api_key).client()
+    def __init__(self, package_name, env='sandbox', **kwargs):
+        self.client = ClientFactory().client()
         self.env = env
         self.cluster_factory = ClusterFactory(self.client, self.env)
         self.package_finder = PackageFinder(self.client)
