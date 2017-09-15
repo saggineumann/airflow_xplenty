@@ -3,7 +3,4 @@ Version 0.2.2, 2017-09-15
 6ad4d95 Use install_requires
 ce69e13 Add dependencies for distribution
 ca577dd Fix distribution issues
-
-Version 0.1.0, 2017-09-15
--------------------------
 f18f4bd Add XplentyJobOperator
