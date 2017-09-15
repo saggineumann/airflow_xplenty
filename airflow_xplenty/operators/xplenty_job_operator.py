@@ -18,7 +18,7 @@ class XplentyJobOperator(BaseOperator):
     def __init__(self, package_name, env='sandbox', **kwargs):
         self.package_name = package_name
 
-        # Setting all of these instance variables are set in the constructor,
+        # Setting all of these instance variables in the constructor,
         # rather than where they are used to facilitate testing.
         self.client = ClientFactory().client()
         self.cluster_factory = ClusterFactory(self.client, env)
