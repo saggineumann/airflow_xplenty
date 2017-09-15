@@ -4,7 +4,7 @@ from airflow_xplenty.version import version
 def do_setup():
     setup(
       name = 'airflow_xplenty',
-      packages = ['airflow_xplenty'],
+      packages = ['airflow_xplenty', 'airflow_xplenty.operators'],
       version = version,
       description = 'Airflow wrappers for the Xplenty API',
       author = 'Tom Collier',
