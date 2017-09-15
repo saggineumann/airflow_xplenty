@@ -26,7 +26,7 @@ cluster will be spun up.
 
 #### Arguments
 
-In addition to the standard (BaseOperator arguments)[https://airflow.incubator.apache.org/code.html#baseoperator], the following are exposed in the `XplentyJobOperator`
+In addition to the standard [BaseOperator arguments](https://airflow.incubator.apache.org/code.html#baseoperator), the following are exposed in the `XplentyJobOperator`
 
 |   Argument   |   Type   | Required | Description |
 |:------------ |:-------- |:-------- |:----------- |
@@ -40,6 +40,5 @@ from airflow_xplenty.operators import XplentyJobOperator
 
 dag = DAG('test', schedule_interval='@daily')
 
-XplentyJobOperator(task_id='run_test', env='production',
-    package_name='test_package', dag=dag)
+XplentyJobOperator(task_id='run_test', env='production', package_name='test_package', dag=dag)
 ```
