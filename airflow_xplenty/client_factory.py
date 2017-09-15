@@ -2,6 +2,7 @@ import os
 from airflow import configuration
 from xplenty import XplentyClient
 
+"""Convenience factory for constructing an XplentyClient with proper credentials"""
 class ClientFactory:
     def __init__(self):
         self.account_id = configuration.get('xplenty', 'account_id')

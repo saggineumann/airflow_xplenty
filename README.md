@@ -30,7 +30,7 @@ In addition to the standard (BaseOperator arguments)[https://airflow.incubator.a
 
 |   Argument   |   Type   | Required | Description |
 |:------------ |:-------- |:-------- |:----------- |
-| env          | `String` | False    | The environment the cluster will be lazily started (default `sandbox`) |
+| env          | `String` | False    | The environment for the cluster (either `production` or `sandbox`, default is `sandbox`) |
 | package_name | `String` | True     | The name of the package to run |
 
 #### Example

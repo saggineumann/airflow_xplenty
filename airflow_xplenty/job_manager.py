@@ -8,7 +8,6 @@ class JobManager:
     def __init__(self, client, poll_interval=10):
         self.client = client
         self.poll_interval = poll_interval
-        self.job = None
 
     def run(self, cluster_id, package_id):
         job = self.client.add_job(cluster_id, package_id, {})
