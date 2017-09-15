@@ -1,3 +1,7 @@
+Version 0.2.0, 2017-09-15
+-------------------------
+ca577dd Fix distribution issues
+
 Version 0.1.0, 2017-09-15
 -------------------------
 f18f4bd Add XplentyJobOperator
