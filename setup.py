@@ -13,7 +13,7 @@ def do_setup():
       download_url =
         ('https://github.com/apartmentlist/airflow_xplenty/archive/' + version + '.tar.gz'),
       keywords = ['airflow', 'xplenty'],
-      classifiers = [],
+      classifiers = []
     )
 
 if __name__ == "__main__":
