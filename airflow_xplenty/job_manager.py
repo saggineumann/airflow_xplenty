@@ -2,21 +2,20 @@ import os
 import time
 from client_factory import ClientFactory
 
-class Job:
+class JobManager:
     FINAL_STATUSES = ['completed', 'failed', 'stopped']
 
-    def __init__(self, cluster_id, package_id):
-        self.client = ClientFactory().client()
-        self.cluster_id = cluster_id
-        self.package_id = package_id
-        self.job_id = None
+    def __init__(self, client, poll_interval=10):
+        self.client = client
+        self.poll_interval = poll_interval
+        self.job = None
 
-    def run(self):
-        job = self.client.add_job(self.cluster_id, self.package_id, {})
+    def run(self, cluster_id, package_id):
+        job = self.client.add_job(cluster_id, package_id, {})
         self.job_id = job.id
 
         while job.status not in self.FINAL_STATUSES:
-            time.sleep(10)
+            time.sleep(self.poll_interval)
             job = self.client.get_job(self.job_id)
 
         if job.status == 'failed':
