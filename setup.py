@@ -13,6 +13,7 @@ def do_setup():
       download_url =
         ('https://github.com/apartmentlist/airflow_xplenty/archive/' + version + '.tar.gz'),
       keywords = ['airflow', 'xplenty'],
+      requires = ['airflow (>= 1.7.0)', 'xplenty (>= 1.0.8)'],
       classifiers = []
     )
 
