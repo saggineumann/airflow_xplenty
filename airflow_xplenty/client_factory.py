@@ -1,4 +1,3 @@
-import os
 from airflow import configuration
 from xplenty import XplentyClient
 

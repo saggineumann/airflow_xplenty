@@ -1,6 +1,3 @@
-import os
-from client_factory import ClientFactory
-
 class PackageFinder:
     def __init__(self, client):
         self.client = client

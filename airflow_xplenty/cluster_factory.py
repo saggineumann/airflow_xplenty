@@ -1,5 +1,4 @@
 import time
-from client_factory import ClientFactory
 
 class ClusterFactory:
     TERMINATING_STATUSES = ['pending_terminate', 'terminating', 'terminated', 'error']

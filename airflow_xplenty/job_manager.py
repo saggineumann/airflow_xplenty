@@ -1,6 +1,4 @@
-import os
 import time
-from client_factory import ClientFactory
 
 class JobManager:
     FINAL_STATUSES = ['completed', 'failed', 'stopped']
