@@ -1,3 +1,7 @@
+Version 0.3.0, 2017-09-20
+-------------------------
+b149184 Add logging to JobManager
+
 Version 0.2.2, 2017-09-15
 -------------------------
 6ad4d95 Use install_requires
