@@ -36,7 +36,7 @@ class ClusterFactoryTestCase(unittest.TestCase):
 
         self.factory.find_or_start()
         self.client.create_cluster.assert_called_once_with('test_env', 1,
-            'airflow-cluster', 'Cluster to run Airflow packages')
+            'airflow-test_env-cluster', 'Cluster to run Airflow packages')
 
     def test_find_or_start_with_no_existing_cluster(self):
         self.client.clusters = []

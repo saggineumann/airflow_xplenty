@@ -27,5 +27,5 @@ class ClusterFactory:
                 return cluster
 
     def __start(self):
-        return self.client.create_cluster(self.env, 1, 'airflow-cluster',
+        return self.client.create_cluster(self.env, 1, 'airflow-%s-cluster' % self.env,
             'Cluster to run Airflow packages')
