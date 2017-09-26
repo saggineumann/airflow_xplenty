@@ -1,5 +1,7 @@
-Version 0.4.0, 2017-09-25
+Version 0.4.2, 2017-09-25
 -------------------------
+3a9fd09 Hide private packages
+fd4e123 Fix typo in error message
 d637742 Specify package by ID
 
 Version 0.3.0, 2017-09-20
