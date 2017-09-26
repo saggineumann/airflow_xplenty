@@ -33,13 +33,6 @@ class XplentyJobOperatorTestCase(unittest.TestCase):
         operator.execute({})
         operator.cluster_factory.find_or_start.assert_called_once_with()
 
-    def test_execute_missing_package_id(self):
-        operator = XplentyJobOperator(package_id='-1', task_id='test')
-        self.mock_operator(operator)
-
-        operator.client.get_package = MagicMock(return_value=None)
-        self.assertRaises(Exception, operator.execute, {})
-
     def test_execute_missing_package_name(self):
         operator = XplentyJobOperator(package_name='test_package', task_id='test')
         self.mock_operator(operator)

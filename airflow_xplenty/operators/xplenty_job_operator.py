@@ -36,15 +36,13 @@ class XplentyJobOperator(BaseOperator):
     def execute(self, context):
         cluster = self.cluster_factory.find_or_start()
 
-        if self.package_id is not None:
-            package = self.client.get_package(self.package_id)
-        else:
+        if self.package_name is not None:
             package = self.package_finder.find(self.package_name)
+            if package is None:
+                raise Exception('Package %s not found' % self.package_name)
+            self.package_id = package.id
 
-        if package is None:
-            raise Exception('Package %s not found' % self.package_name)
-
-        self.job_manager.run(cluster.id, package.id)
+        self.job_manager.run(cluster.id, self.package_id)
 
     def on_kill(self):
         self.job_manager.stop()
