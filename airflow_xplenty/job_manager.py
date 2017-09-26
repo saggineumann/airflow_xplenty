@@ -25,7 +25,7 @@ class JobManager:
         logging.info('Job %d finished in state %s' % (self.job_id, job.status))
 
         if job.status == 'failed':
-            raise Exception('Job for package_id %d failed: %s' % (self.package_id, job.errors))
+            raise Exception('Job for package_id %d failed: %s' % (package_id, job.errors))
 
     def stop(self):
         if self.job_id is not None:
