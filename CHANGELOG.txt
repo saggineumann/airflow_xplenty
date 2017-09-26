@@ -1,3 +1,7 @@
+Version 0.4.0, 2017-09-25
+-------------------------
+d637742 Specify package by ID
+
 Version 0.3.0, 2017-09-20
 -------------------------
 b149184 Add logging to JobManager
