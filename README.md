@@ -28,10 +28,14 @@ cluster will be spun up.
 
 In addition to the standard [BaseOperator arguments](https://airflow.incubator.apache.org/code.html#baseoperator), the following are exposed in the `XplentyJobOperator`
 
-|   Argument   |   Type   | Required | Description |
-|:------------ |:-------- |:-------- |:----------- |
-| env          | `String` | False    | The environment for the cluster (either `production` or `sandbox`, default is `sandbox`) |
-| package_name | `String` | True     | The name of the package to run |
+|   Argument   |   Type    | Required | Description |
+|:------------ |:--------- |:-------- |:----------- |
+| env          | `String`  | False    | The environment for the cluster (either `production` or `sandbox`, default is `sandbox`) |
+| package_id   | `Integer` | True*    | The ID of the package to run |
+| package_name | `String`  | True*    | The name of the package to run |
+
+* Either `package_id` or `package_name` (but not both) must be supplied to the
+constructor.
 
 #### Example
 
