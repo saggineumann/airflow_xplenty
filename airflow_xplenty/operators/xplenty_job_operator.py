@@ -14,7 +14,14 @@ operator will fail.
 """
 class XplentyJobOperator(BaseOperator):
     @apply_defaults
-    def __init__(self, package_name, env='sandbox', **kwargs):
+    def __init__(self, package_id=None, package_name=None, env='sandbox', **kwargs):
+        if package_id is None and package_name is None:
+            raise TypeError('__init__ requires either package_id or package_name')
+
+        if package_id is not None and package_name is not None:
+            raise TypeError('Do not supploy both package_id and package_name')
+
+        self.package_id = package_id
         self.package_name = package_name
 
         # Setting all of these instance variables in the constructor,
@@ -28,7 +35,11 @@ class XplentyJobOperator(BaseOperator):
 
     def execute(self, context):
         cluster = self.cluster_factory.find_or_start()
-        package = self.package_finder.find(self.package_name)
+
+        if self.package_id is not None:
+            package = self.client.get_package(self.package_id)
+        else:
+            package = self.package_finder.find(self.package_name)
 
         if package is None:
             raise Exception('Package %s not found' % self.package_name)
