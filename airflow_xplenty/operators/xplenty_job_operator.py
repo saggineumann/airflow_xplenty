@@ -19,7 +19,7 @@ class XplentyJobOperator(BaseOperator):
             raise TypeError('__init__ requires either package_id or package_name')
 
         if package_id is not None and package_name is not None:
-            raise TypeError('Do not supploy both package_id and package_name')
+            raise TypeError('Do not supply both package_id and package_name')
 
         self.package_id = package_id
         self.package_name = package_name
