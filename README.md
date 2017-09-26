@@ -44,5 +44,5 @@ from airflow_xplenty.operators import XplentyJobOperator
 
 dag = DAG('test', schedule_interval='@daily')
 
-XplentyJobOperator(task_id='run_test', env='production', package_name='test_package', dag=dag)
+XplentyJobOperator(task_id='run_test', env='production', package_id=314, dag=dag)
 ```
