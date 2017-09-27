@@ -46,9 +46,9 @@ class JobManagerTestCase(unittest.TestCase):
 
     def test_stop(self):
         self.manager.job_id = 42
-        self.client.terminate_job = MagicMock()
+        self.client.stop_job = MagicMock()
         self.manager.stop()
-        self.client.terminate_job.assert_called_once_with(42)
+        self.client.stop_job.assert_called_once_with(42)
 
 if __name__ == '__main__':
     unittest.main()

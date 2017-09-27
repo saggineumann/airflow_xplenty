@@ -29,4 +29,4 @@ class JobManager:
 
     def stop(self):
         if self.job_id is not None:
-            self.client.terminate_job(self.job_id)
+            self.client.stop_job(self.job_id)
