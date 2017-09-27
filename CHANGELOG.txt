@@ -1,5 +1,6 @@
-Version 0.4.5, 2017-09-26
+Version 0.4.6, 2017-09-26
 -------------------------
+8473699 Fix terminate job
 f53edaa Don't fetch package when ID is given
 d5d5c16 Fix bug on failed job
 8930508 Fix packages error
