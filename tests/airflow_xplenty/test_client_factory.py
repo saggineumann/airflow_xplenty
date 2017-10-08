@@ -2,7 +2,7 @@ import os
 import unittest
 from airflow.configuration import conf
 from airflow_xplenty.client_factory import ClientFactory
-from xplenty3 import XplentyClient
+from xplenty import XplentyClient
 
 class ClientFactoryTestCase(unittest.TestCase):
     def setUp(self):

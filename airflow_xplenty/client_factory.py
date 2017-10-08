@@ -1,5 +1,5 @@
 from airflow import configuration
-from xplenty3 import XplentyClient
+from xplenty import XplentyClient
 
 """Convenience factory for constructing an XplentyClient with proper credentials"""
 class ClientFactory:
