@@ -1,2 +1,2 @@
-airflow
-xplenty3
+apache-airflow >= 1.8.2
+xplenty >= 1.1.0
