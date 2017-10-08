@@ -1,5 +1,6 @@
-Version 1.0.1, 2017-09-29
+Version 1.0.2, 2017-10-08
 -------------------------
+94a1178 Fix python version
 ecb9da4 Fix package lookup by name
 
 Version 0.4.6, 2017-09-26
