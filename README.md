@@ -18,31 +18,89 @@ obviates the need to store these sensitive credentials in the app.
 
 ## Operators
 
-### `XplentyJobOperator`
+### `XplentyFindOrStartClusterOperator`
 
-This operator runs a package as a job on a cluster. The cluster will be lazily
-started, i.e. if a cluster is running that one will be used, otherwise a new
-cluster will be spun up.
+This operator finds or starts a cluster in the given environment. It will only
+find clusters that are `pending`, `starting`, or `available`. It pushes the
+cluster ID into the XComs.
 
 #### Arguments
 
-In addition to the standard [BaseOperator arguments](https://airflow.incubator.apache.org/code.html#baseoperator), the following are exposed in the `XplentyJobOperator`
+In addition to the standard [BaseOperator arguments](https://airflow.incubator.apache.org/code.html#baseoperator), the following are exposed
 
 |   Argument   |   Type    | Required | Description |
 |:------------ |:--------- |:-------- |:----------- |
 | env          | `String`  | False    | The environment for the cluster (either `production` or `sandbox`, default is `sandbox`) |
-| package_id   | `Integer` | True*    | The ID of the package to run |
-| package_name | `String`  | True*    | The name of the package to run |
 
-* Either `package_id` or `package_name` (but not both) must be supplied to the
-constructor.
+
+### `XplentyWaitForClusterSensor`
+
+This sensor operator waits for a cluster to be `available` or in a terminating
+state. It finds the cluster ID from the XComs.
+
+#### Arguments
+
+In addition to the standard [BaseOperator arguments](https://airflow.incubator.apache.org/code.html#baseoperator), the following are exposed
+
+|       Argument        |   Type    | Required | Description |
+|:--------------------- |:--------- |:-------- |:----------- |
+| start_cluster_task_id | `String`  | True     | The task ID of a XplentyFindOrStartClusterOperator  |
+
+
+### `XplentyStartJobOperator`
+
+This operator starts a job running a package on an Xplenty cluster. It finds the
+cluster ID from the XComs.
+
+#### Arguments
+
+In addition to the standard [BaseOperator arguments](https://airflow.incubator.apache.org/code.html#baseoperator), the following are exposed
+
+|       Argument        |   Type    | Required | Description |
+|:--------------------- |:--------- |:-------- |:----------- |
+| start_cluster_task_id | `String`  | True     | The task ID of a XplentyFindOrStartClusterOperator  |
+| package_id            | `Integer` | True     | The ID of the package to run |
+
+
+### `XplentyWaitForJobSensor`
+
+This sensor operator waits for a job to complete (either successfully or
+failing). It finds the job ID from the XComs.
+
+#### Arguments
+
+In addition to the standard [BaseOperator arguments](https://airflow.incubator.apache.org/code.html#baseoperator), the following are exposed
+
+|     Argument      |   Type    | Required | Description |
+|:----------------- |:--------- |:-------- |:----------- |
+| start_job_task_id | `String`  | True     | The task ID of a XplentyStartJobOperator  |
+
 
 #### Example
 
 ```python
-from airflow_xplenty.operators import XplentyJobOperator
+from airflow_xplenty.operators import XplentyFindOrStartClusterOperator
+from airflow_xplenty.operators import XplentyWaitForClusterSensor
+from airflow_xplenty.operators import XplentyStartJobOperator
+from airflow_xplenty.operators import XplentyWaitForJobSensor
 
 dag = DAG('test', schedule_interval='@daily')
 
-XplentyJobOperator(task_id='run_test', env='production', package_id=314, dag=dag)
+start_cluster = XplentyFindOrStartClusterOperator(task_id='start_cluster',
+    env='production', dag=dag)
+
+wait_for_cluster = XplentyWaitForClusterSensor(task_id='wait_for_cluster',
+    start_cluster_task_id=start_cluster.task_id, dag=dag)
+
+wait_for_cluster.set_upstream(start_cluster)
+
+start_job = XplentyStartJobOperator(task_id='start_job', package_id=314,
+    start_cluster_task_id=start_cluster.task_id, dag=dag)
+
+start_job.set_upstream(wait_for_cluster)
+
+wait_for_job = XplentyWaitForJobSensor(task_id='wait_for_job',
+    start_job_task_id=start_job.task_id, dag=dag)
+
+wait_for_job.set_upstream(start_job)
 ```
