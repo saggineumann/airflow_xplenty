@@ -1,3 +1,7 @@
+Version 2.0.0, 2017-10-09
+-------------------------
+a269c58 Break operator into atomic operators
+
 Version 1.0.2, 2017-10-08
 -------------------------
 94a1178 Fix python version
