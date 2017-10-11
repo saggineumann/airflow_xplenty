@@ -25,7 +25,7 @@ class XplentyWaitForClusterSensor(BaseSensorOperator):
         if cluster.status in self.READY_STATUSES:
             logging.info('Cluster %d is ready.' % cluster.id)
             return True
-        elif cluster.status in TERMINATING_STATUSES:
+        elif cluster.status in self.TERMINATING_STATUSES:
             raise Exception('Cluster failed to start, in status: %s' % cluster.status)
         else:
             logging.info('Waiting for cluster %d to start.' % cluster.id)
