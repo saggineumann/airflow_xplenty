@@ -59,8 +59,11 @@ In addition to the standard [BaseOperator arguments](https://airflow.incubator.a
 |       Argument        |   Type    | Required | Description |
 |:--------------------- |:--------- |:-------- |:----------- |
 | start_cluster_task_id | `String`  | True     | The task ID of a XplentyFindOrStartClusterOperator  |
-| package_id            | `Integer` | True     | The ID of the package to run |
+| package_id            | `Integer` | True*    | The ID of the package to run |
+| package_name          | `String`  | True*    | The name of the package to run |
 
+ * Either `package_id` or `package_name` (but not both) must be supplied to the
+ constructor.
 
 ### `XplentyWaitForJobSensor`
 
