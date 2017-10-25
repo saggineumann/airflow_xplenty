@@ -1,3 +1,7 @@
+Version 2.1.0, 2017-10-24
+-------------------------
+e05be6b Accept package name for start job operator
+
 Version 2.0.1, 2017-10-10
 -------------------------
 8d06f17 Fix bug when waiting for new cluster
