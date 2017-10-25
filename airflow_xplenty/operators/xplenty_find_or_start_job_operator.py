@@ -3,6 +3,8 @@ from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 from airflow_xplenty.client_factory import ClientFactory
 
+RUNNING_STATUSES = ['idle', 'pending', 'running']
+
 def _find_package(client, name):
     offset = 0
     page_size = 100
@@ -19,7 +21,7 @@ def _find_package(client, name):
 
 """Operator start a job on an Xplenty cluster
 """
-class XplentyStartJobOperator(BaseOperator):
+class XplentyFindOrStartJobOperator(BaseOperator):
     @apply_defaults
     def __init__(self, start_cluster_task_id, package_id=None, package_name=None, **kwargs):
         if package_id is None and package_name is None:
@@ -33,7 +35,7 @@ class XplentyStartJobOperator(BaseOperator):
         self.start_cluster_task_id = start_cluster_task_id
         self.client = ClientFactory().client()
 
-        super(XplentyStartJobOperator, self).__init__(**kwargs)
+        super(XplentyFindOrStartJobOperator, self).__init__(**kwargs)
 
     def execute(self, context):
         cluster_id = context['task_instance'].xcom_pull(task_ids=self.start_cluster_task_id)
@@ -45,6 +47,11 @@ class XplentyStartJobOperator(BaseOperator):
             if package is None:
                 raise Exception('Package %s not found' % self.package_name)
             self.package_id = package.id
+
+        for job in self.client.jobs:
+            if job.package_id == self.package_id and job.status in RUNNING_STATUSES:
+                logging.info('Found already running job %d' % job.id)
+                return job.id
 
         job = self.client.add_job(cluster_id, self.package_id, {})
         logging.info('Starting job %d' % job.id)

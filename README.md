@@ -47,10 +47,10 @@ In addition to the standard [BaseOperator arguments](https://airflow.incubator.a
 | start_cluster_task_id | `String`  | True     | The task ID of a XplentyFindOrStartClusterOperator  |
 
 
-### `XplentyStartJobOperator`
+### `XplentyFindOrStartJobOperator`
 
-This operator starts a job running a package on an Xplenty cluster. It finds the
-cluster ID from the XComs.
+This operator finds an already runnin job or starts a new job for a package on
+an Xplenty cluster. It finds the cluster ID from the XComs.
 
 #### Arguments
 
