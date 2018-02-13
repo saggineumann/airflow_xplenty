@@ -1,3 +1,4 @@
+import json
 import logging
 from airflow.operators.sensors import BaseSensorOperator
 from airflow.utils.decorators import apply_defaults
@@ -26,6 +27,9 @@ class XplentyWaitForJobSensor(BaseSensorOperator):
             raise Exception('Job failed: %s' % job.errors)
         elif job.status in self.SUCCESS_STATUSES:
             logging.info('Job %d finished in state %s' % (job_id, job.status))
+            print json.dumps(job.outputs, indent=4)
+            context['ti'].xcom_push(
+                key='xplenty_job_outputs', value=job.outputs)
             return True
         else:
             progress = round(job.progress * 100, 1)

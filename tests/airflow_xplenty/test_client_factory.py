@@ -1,8 +1,7 @@
-import os
 import unittest
 from airflow.configuration import conf
-from airflow_xplenty.client_factory import ClientFactory
-from xplenty import XplentyClient
+from airflow_xplenty.client_factory import ClientFactory, XplentyV2Client
+
 
 class ClientFactoryTestCase(unittest.TestCase):
     def setUp(self):
@@ -14,7 +13,7 @@ class ClientFactoryTestCase(unittest.TestCase):
     def test_client_type(self):
         factory = ClientFactory()
         client = factory.client()
-        self.assertEqual(type(client), XplentyClient)
+        self.assertEqual(type(client), XplentyV2Client)
 
     def test_client_account_id(self):
         factory = ClientFactory()
@@ -25,6 +24,7 @@ class ClientFactoryTestCase(unittest.TestCase):
         factory = ClientFactory()
         client = factory.client()
         self.assertEqual(client.api_key, 'TestKey')
+
 
 if __name__ == '__main__':
     unittest.main()
