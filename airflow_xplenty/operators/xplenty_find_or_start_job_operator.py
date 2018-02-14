@@ -1,3 +1,4 @@
+import json
 import logging
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
@@ -24,7 +25,7 @@ def _find_package(client, name):
 class XplentyFindOrStartJobOperator(BaseOperator):
     @apply_defaults
     def __init__(self, start_cluster_task_id, package_id=None,
-            package_name=None, package_variables={}, **kwargs):
+            package_name=None, variables_fn=None, **kwargs):
         if package_id is None and package_name is None:
             raise TypeError('__init__ requires either package_id or package_name')
 
@@ -35,7 +36,7 @@ class XplentyFindOrStartJobOperator(BaseOperator):
         self.package_name = package_name
         self.start_cluster_task_id = start_cluster_task_id
         self.client = ClientFactory().client()
-        self.package_variables = package_variables
+        self.variables_fn = variables_fn
 
         super(XplentyFindOrStartJobOperator, self).__init__(**kwargs)
 
@@ -50,14 +51,19 @@ class XplentyFindOrStartJobOperator(BaseOperator):
                 raise Exception('Package %s not found' % self.package_name)
             self.package_id = package.id
 
-        # Only reuse existing running jobs when there are no variables.
-        if self.package_variables == {}:
+        # Only try to reuse existing running jobs when there are no variables.
+        if self.variables_fn is None:
             for job in self.client.jobs:
                 if job.package_id == self.package_id and job.status in RUNNING_STATUSES:
                     logging.info('Found already running job %d' % job.id)
                     return job.id
 
-        job = self.client.add_job(
-            cluster_id, self.package_id, self.package_variables)
-        logging.info('Starting job %d' % job.id)
+        if self.variables_fn is None:
+            variables = {}
+        else:
+            variables = self.variables_fn()
+
+        job = self.client.add_job(cluster_id, self.package_id, variables)
+        pretty_variables = json.dumps(variables, indent=4)
+        logging.info('Starting job %d with %s' % (job.id, pretty_variables))
         return job.id
