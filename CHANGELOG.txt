@@ -1,3 +1,7 @@
+Version 3.2.0, 2018-02-14
+-------------------------
+48423e6 Insert job outputs in XComs
+
 Version 3.1.0, 2018-02-13
 -------------------------
 f051937 Accept job variables function in operator
