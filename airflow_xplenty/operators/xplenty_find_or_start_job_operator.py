@@ -61,9 +61,9 @@ class XplentyFindOrStartJobOperator(BaseOperator):
         if self.variables_fn is None:
             variables = {}
         else:
-            variables = self.variables_fn()
+            variables = self.variables_fn(context)
 
         job = self.client.add_job(cluster_id, self.package_id, variables)
         pretty_variables = json.dumps(variables, indent=4)
-        logging.info('Starting job %d with %s' % (job.id, pretty_variables))
+        logging.info('Starting job %d with variables %s' % (job.id, pretty_variables))
         return job.id
