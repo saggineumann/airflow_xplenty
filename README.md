@@ -56,11 +56,12 @@ an Xplenty cluster. It finds the cluster ID from the XComs.
 
 In addition to the standard [BaseOperator arguments](https://airflow.incubator.apache.org/code.html#baseoperator), the following are exposed
 
-|       Argument        |   Type    | Required | Description |
-|:--------------------- |:--------- |:-------- |:----------- |
-| start_cluster_task_id | `String`  | True     | The task ID of a XplentyFindOrStartClusterOperator  |
-| package_id            | `Integer` | True*    | The ID of the package to run |
-| package_name          | `String`  | True*    | The name of the package to run |
+|       Argument        |   Type     | Required | Description |
+|:--------------------- |:---------- |:-------- |:----------- |
+| start_cluster_task_id | `String`   | True     | The task ID of a XplentyFindOrStartClusterOperator  |
+| package_id            | `Integer`  | True*    | The ID of the package to run |
+| package_name          | `String`   | True*    | The name of the package to run |
+| variables_fn          | `Function` | False    | Optional function that takes the context from #execute and returns a dict of variables to pass to the package |
 
  * Either `package_id` or `package_name` (but not both) must be supplied to the
  constructor.
