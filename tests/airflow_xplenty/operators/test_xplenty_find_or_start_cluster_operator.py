@@ -19,7 +19,9 @@ class XplentyFindOrStartClusterOperatorTestCase(unittest.TestCase):
         cluster = Mock(id=42)
         operator.client.create_cluster = MagicMock(return_value=cluster)
         terminated_cluster = Mock(id=21, type='sandbox', status='terminated')
-        operator.client.get_clusters = MagicMock(return_value=[terminated_cluster])
+        get_cluster = Mock()
+        get_cluster.side_effect = [[terminated_cluster], []]
+        operator.client.get_clusters = get_cluster
         operator.execute({})
         operator.client.create_cluster.assert_called_once_with('sandbox', 1,
             'airflow-sandbox-cluster', 'Cluster to run Airflow packages')
@@ -29,7 +31,9 @@ class XplentyFindOrStartClusterOperatorTestCase(unittest.TestCase):
         cluster = Mock(id=42)
         operator.client.create_cluster = MagicMock(return_value=cluster)
         terminated_cluster = Mock(id=21, type='production', status='available')
-        operator.client.get_clusters = MagicMock(return_value=[terminated_cluster])
+        get_cluster = Mock()
+        get_cluster.side_effect = [[terminated_cluster], []]
+        operator.client.get_clusters = get_cluster
         operator.execute({})
         operator.client.create_cluster.assert_called_once_with('sandbox', 1,
             'airflow-sandbox-cluster', 'Cluster to run Airflow packages')
@@ -44,7 +48,9 @@ class XplentyFindOrStartClusterOperatorTestCase(unittest.TestCase):
     def test_find_available_cluster(self):
         operator = XplentyFindOrStartClusterOperator(env='sandbox', task_id='test')
         terminated_cluster = Mock(id=21, type='sandbox', status='available')
-        operator.client.get_clusters = MagicMock(return_value=[terminated_cluster])
+        get_cluster = Mock()
+        get_cluster.side_effect = [[terminated_cluster], []]
+        operator.client.get_clusters = get_cluster
         self.assertEqual(operator.execute({}), 21)
 
 if __name__ == '__main__':

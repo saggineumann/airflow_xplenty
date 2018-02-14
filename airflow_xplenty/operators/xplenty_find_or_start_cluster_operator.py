@@ -3,6 +3,7 @@ from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 from airflow_xplenty.client_factory import ClientFactory
 
+
 """Operator to find or start and Xplenty cluster
 
 Spin-up or re-use a cluster in the given environment ('sandbox' or 'production')
@@ -27,10 +28,21 @@ class XplentyFindOrStartClusterOperator(BaseOperator):
 
 
     def __find(self):
-        for cluster in self.client.clusters:
-            if self.__is_useable(cluster):
-                logging.info('Found existing Xplenty %s cluster with id %d.' % (self.env, cluster.id))
-                return cluster
+        offset = 0
+        page_size = 100
+        while True:
+            clusters = self.client.get_clusters(offset=offset, limit=page_size)
+            if len(clusters) == 0:
+                return None
+
+            for cluster in clusters:
+                if self.__is_useable(cluster):
+                    logging.info(
+                        'Found existing Xplenty %s cluster with id %d.' % (
+                        self.env, cluster.id))
+                    return cluster
+
+            offset += page_size
 
     def __start(self):
         return self.client.create_cluster(self.env, 1,
