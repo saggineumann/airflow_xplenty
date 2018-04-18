@@ -1,5 +1,4 @@
 import unittest
-from airflow.configuration import conf
 from mock import MagicMock
 from mock import Mock
 from airflow_xplenty.operators import XplentyFindOrStartClusterOperator
