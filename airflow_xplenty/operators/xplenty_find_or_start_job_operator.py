@@ -11,7 +11,7 @@ def _find_package(client, name):
     page_size = 100
     while True:
         packages = client.get_packages(offset=offset, limit=page_size)
-        if len(packages) == 0:
+        if not packages:
             return None
 
         for package in packages:

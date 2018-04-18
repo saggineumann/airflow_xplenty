@@ -34,7 +34,7 @@ class XplentyFindOrStartClusterOperator(BaseOperator):
         page_size = 100
         while True:
             clusters = self.client.get_clusters(offset=offset, limit=page_size)
-            if len(clusters) == 0:
+            if not clusters:
                 return None
 
             for cluster in clusters:
