@@ -56,7 +56,7 @@ class XplentyFindOrStartJobOperator(BaseOperator):
         if self.variables_fn is None:
             for job in self.client.jobs:
                 if job.package_id == self.package_id and job.status in RUNNING_STATUSES:
-                    logging.info('Found already running job %d' % job.id)
+                    logging.info('Found already running job %d', job.id)
                     return job.id
 
         if self.variables_fn is None:
@@ -66,5 +66,6 @@ class XplentyFindOrStartJobOperator(BaseOperator):
 
         job = self.client.add_job(cluster_id, self.package_id, variables)
         pretty_variables = json.dumps(variables, indent=4)
-        logging.info('Starting job %d with variables %s' % (job.id, pretty_variables))
+        logging.info(
+            'Starting job %d with variables %s', job.id, pretty_variables)
         return job.id

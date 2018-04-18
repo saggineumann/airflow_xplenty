@@ -22,7 +22,9 @@ class XplentyFindOrStartClusterOperator(BaseOperator):
         cluster = self.__find()
         if cluster is None:
             cluster = self.__start()
-            logging.info('Starting new Xplenty %s cluster with id %d.' % (self.env, cluster.id))
+            logging.info(
+                'Starting new Xplenty %s cluster with id %d.', self.env,
+                cluster.id)
 
         return cluster.id
 
@@ -38,8 +40,8 @@ class XplentyFindOrStartClusterOperator(BaseOperator):
             for cluster in clusters:
                 if self.__is_useable(cluster):
                     logging.info(
-                        'Found existing Xplenty %s cluster with id %d.' % (
-                        self.env, cluster.id))
+                        'Found existing Xplenty %s cluster with id %d.',
+                        self.env, cluster.id)
                     return cluster
 
             offset += page_size
