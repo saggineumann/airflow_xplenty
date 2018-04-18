@@ -24,7 +24,3 @@ class ClientFactoryTestCase(unittest.TestCase):
         factory = ClientFactory()
         client = factory.client()
         self.assertEqual(client.api_key, 'TestKey')
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -52,6 +52,3 @@ class XplentyFindOrStartClusterOperatorTestCase(unittest.TestCase):
         get_cluster.side_effect = [[terminated_cluster], []]
         operator.client.get_clusters = get_cluster
         self.assertEqual(operator.execute({}), 21)
-
-if __name__ == '__main__':
-    unittest.main()
