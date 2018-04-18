@@ -3,9 +3,11 @@ from airflow.operators.sensors import BaseSensorOperator
 from airflow.utils.decorators import apply_defaults
 from airflow_xplenty.client_factory import ClientFactory
 
-"""Wait for a cluster to be in the ready or terminating state
-"""
+
 class XplentyWaitForClusterSensor(BaseSensorOperator):
+    """
+    Wait for a cluster to be in the ready or terminating state
+    """
     TERMINATING_STATUSES = ['pending_terminate', 'terminating', 'terminated', 'error']
     READY_STATUSES = ['available', 'idle']
 

@@ -20,9 +20,10 @@ def _find_package(client, name):
 
         offset += page_size
 
-"""Operator start a job on an Xplenty cluster
-"""
+
 class XplentyFindOrStartJobOperator(BaseOperator):
+    """Operator start a job on an Xplenty cluster
+    """
     @apply_defaults
     def __init__(self, start_cluster_task_id, package_id=None,
             package_name=None, variables_fn=None, **kwargs):

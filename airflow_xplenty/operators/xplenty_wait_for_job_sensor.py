@@ -4,9 +4,10 @@ from airflow.operators.sensors import BaseSensorOperator
 from airflow.utils.decorators import apply_defaults
 from airflow_xplenty.client_factory import ClientFactory
 
-"""Wait for a job to finish
-"""
+
 class XplentyWaitForJobSensor(BaseSensorOperator):
+    """Wait for a job to finish
+    """
     SUCCESS_STATUSES = ['completed', 'stopped']
     FAILED_STATUSES = ['failed']
 

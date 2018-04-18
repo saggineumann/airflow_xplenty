@@ -4,11 +4,11 @@ from airflow.utils.decorators import apply_defaults
 from airflow_xplenty.client_factory import ClientFactory
 
 
-"""Operator to find or start and Xplenty cluster
-
-Spin-up or re-use a cluster in the given environment ('sandbox' or 'production')
-"""
 class XplentyFindOrStartClusterOperator(BaseOperator):
+    """Operator to find or start and Xplenty cluster
+
+    Spin-up or re-use a cluster in the given environment ('sandbox' or 'production')
+    """
     TERMINATING_STATUSES = ['pending_terminate', 'terminating', 'terminated', 'error']
 
     @apply_defaults
