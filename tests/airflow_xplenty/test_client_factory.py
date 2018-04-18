@@ -5,7 +5,6 @@ from airflow_xplenty.client_factory import ClientFactory, XplentyV2Client
 
 class ClientFactoryTestCase(unittest.TestCase):
     def setUp(self):
-        # TODO: set these values in unittest.cfg and have Airflow read from there
         if not conf.has_section('xplenty'):
             conf.add_section('xplenty')
         conf.set('xplenty', 'account_id', 'TestAccount')
