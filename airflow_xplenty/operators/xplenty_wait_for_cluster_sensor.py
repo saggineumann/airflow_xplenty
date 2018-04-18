@@ -8,7 +8,8 @@ class XplentyWaitForClusterSensor(BaseSensorOperator):
     """
     Wait for a cluster to be in the ready or terminating state
     """
-    TERMINATING_STATUSES = ['pending_terminate', 'terminating', 'terminated', 'error']
+    TERMINATING_STATUSES = ['pending_terminate', 'terminating', 'terminated',
+                            'error']
     READY_STATUSES = ['available', 'idle']
 
     @apply_defaults
@@ -19,7 +20,8 @@ class XplentyWaitForClusterSensor(BaseSensorOperator):
         super(XplentyWaitForClusterSensor, self).__init__(**kwargs)
 
     def poke(self, context):
-        cluster_id = context['task_instance'].xcom_pull(task_ids=self.start_cluster_task_id)
+        cluster_id = context['task_instance'].xcom_pull(
+            task_ids=self.start_cluster_task_id)
         if cluster_id is None:
             raise Exception('No cluster_id found in XComs')
 
@@ -28,7 +30,8 @@ class XplentyWaitForClusterSensor(BaseSensorOperator):
             logging.info('Cluster %d is ready.', cluster.id)
             return True
         elif cluster.status in self.TERMINATING_STATUSES:
-            raise Exception('Cluster failed to start, in status: %s' % cluster.status)
+            raise Exception(
+                'Cluster failed to start, in status: %s' % cluster.status)
         else:
             logging.info('Waiting for cluster %d to start.', cluster.id)
             return False

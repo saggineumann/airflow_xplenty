@@ -7,9 +7,11 @@ from airflow_xplenty.client_factory import ClientFactory
 class XplentyFindOrStartClusterOperator(BaseOperator):
     """Operator to find or start and Xplenty cluster
 
-    Spin-up or re-use a cluster in the given environment ('sandbox' or 'production')
+    Spin-up or re-use a cluster in the given environment ('sandbox' or
+    'production')
     """
-    TERMINATING_STATUSES = ['pending_terminate', 'terminating', 'terminated', 'error']
+    TERMINATING_STATUSES = ['pending_terminate', 'terminating', 'terminated',
+                            'error']
 
     @apply_defaults
     def __init__(self, env='sandbox', **kwargs):
@@ -27,7 +29,6 @@ class XplentyFindOrStartClusterOperator(BaseOperator):
                 cluster.id)
 
         return cluster.id
-
 
     def __find(self):
         offset = 0
@@ -47,8 +48,9 @@ class XplentyFindOrStartClusterOperator(BaseOperator):
             offset += page_size
 
     def __start(self):
-        return self.client.create_cluster(self.env, 1,
-            'airflow-%s-cluster' % self.env, 'Cluster to run Airflow packages')
+        return self.client.create_cluster(
+            self.env, 1, 'airflow-%s-cluster' % self.env,
+            'Cluster to run Airflow packages')
 
     def __is_useable(self, cluster):
         if cluster.type != self.env:

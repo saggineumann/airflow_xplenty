@@ -4,6 +4,7 @@ from mock import MagicMock
 from mock import Mock
 from airflow_xplenty.operators import XplentyFindOrStartClusterOperator
 
+
 class XplentyFindOrStartClusterOperatorTestCase(unittest.TestCase):
     def setUp(self):
         self.operator = XplentyFindOrStartClusterOperator(
