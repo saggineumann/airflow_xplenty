@@ -55,5 +55,5 @@ class XplentyFindOrStartClusterOperator(BaseOperator):
             return False
         elif cluster.status in self.TERMINATING_STATUSES:
             return False
-        else:
-            return True
+
+        return True
