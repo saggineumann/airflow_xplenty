@@ -6,4 +6,4 @@ install:
   - pip install pipenv
   - pipenv install -d
 script:
-  - pytest
+  - pytest --cov=airflow_xplenty
