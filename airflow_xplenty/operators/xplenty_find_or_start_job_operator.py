@@ -50,9 +50,13 @@ class XplentyFindOrStartJobOperator(BaseOperator):
             raise Exception('No cluster_id found in XComs')
 
         if self.package_name is not None:
-            package = _find_package(self.client, self.package_name)
+            if callable(self.package_name):
+                package_name = self.package_name(context)
+            else:
+                package_name = self.package_name
+            package = _find_package(self.client, package_name)
             if package is None:
-                raise Exception('Package %s not found' % self.package_name)
+                raise Exception('Package %s not found' % package_name)
             self.package_id = package.id
 
         # Only try to reuse existing running jobs when there are no variables.

@@ -53,6 +53,20 @@ class XplentyFindOrStartJobOperatorTestCase(unittest.TestCase):
         self.operator.execute({'task_instance': self.task_instance})
         self.operator.client.add_job.assert_called_with(314, 24, {})
 
+    def test_execute_with_package_name_fn(self):
+        def package_name_fn(_context):
+            return 'do_stuff_from_fn'
+
+        self.init_operator(package_name=package_name_fn)
+        expected_package = Mock(id=24)
+        expected_package.name = 'do_stuff_from_fn'
+        other_package = Mock(id=23)
+        other_package.name = 'do_nada'
+        packages = [other_package, expected_package]
+        self.operator.client.get_packages = MagicMock(return_value=packages)
+        self.operator.execute({'task_instance': self.task_instance})
+        self.operator.client.add_job.assert_called_with(314, 24, {})
+
     def test_execute_with_invalid_package_name(self):
         self.init_operator(package_name='do_stuff')
         other_package = Mock(id=23)
