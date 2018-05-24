@@ -16,8 +16,7 @@ def do_setup():
         '.tar.gz'),
       keywords=['airflow', 'xplenty'],
       install_requires=['apache-airflow (>= 1.8.2)', 'xplenty (>= 1.2.0)'],
-      classifiers=['Programming Language :: Python :: 2.7',
-                   'Programming Language :: Python :: 3']
+      classifiers=['Programming Language :: Python :: 3']
     )
 
 

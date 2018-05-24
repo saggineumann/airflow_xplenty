@@ -4,11 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-apache-airflow = ">=1.8.2"
-xplenty = ">=1.2.0"
+apache-airflow = ">=1.9.0"
+xplenty = {git = "https://github.com/apartmentlist/xplenty.py.git", ref = "404ce75a78bffdd9be0a8e3a36c61f4db33b9868"}
 
 [dev-packages]
 pytest = "*"
+pytest-cov = "*"
 mock = "*"
 
 [requires]

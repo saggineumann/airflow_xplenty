@@ -30,7 +30,7 @@ class XplentyWaitForJobSensor(BaseSensorOperator):
         elif job.status in self.SUCCESS_STATUSES:
             logging.info('Job %d finished in state %s', job_id, job.status)
             logging.info(json.dumps(job.outputs, indent=4))
-            context['ti'].xcom_push(
+            context['task_instance'].xcom_push(
                 key='xplenty_job_outputs', value=job.outputs)
             return True
         else:
