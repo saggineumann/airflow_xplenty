@@ -80,6 +80,19 @@ In addition to the standard [BaseOperator arguments](https://airflow.incubator.a
 | start_job_task_id | `String`  | True     | The task ID of a XplentyStartJobOperator  |
 
 
+### `XplentyTerminateJobOperator`
+
+This operator an existing job. It finds the job ID from the XComs.
+
+#### Arguments
+
+In addition to the standard [BaseOperator arguments](https://airflow.incubator.apache.org/code.html#baseoperator), the following are exposed
+
+|       Argument        |   Type     | Required | Description |
+|:--------------------- |:---------- |:-------- |:----------- |
+| start_job_task_id     | `String`   | True     | The task ID of a XplentyFindOrStartJobOperator  |
+
+
 #### Example
 
 ```python
