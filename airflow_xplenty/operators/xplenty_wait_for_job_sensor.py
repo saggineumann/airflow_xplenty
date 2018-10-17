@@ -8,8 +8,8 @@ from airflow_xplenty.client_factory import ClientFactory
 class XplentyWaitForJobSensor(BaseSensorOperator):
     """Wait for a job to finish
     """
-    SUCCESS_STATUSES = ['completed', 'stopped']
-    FAILED_STATUSES = ['failed']
+    SUCCESS_STATUSES = ['completed']
+    FAILED_STATUSES = ['failed', 'stopped']
 
     @apply_defaults
     def __init__(self, start_job_task_id, **kwargs):

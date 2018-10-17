@@ -31,12 +31,10 @@ class XplentyWaitForJobSensorTestCase(unittest.TestCase):
             key='xplenty_job_outputs', value='donezo!')
 
     def test_poke_with_stopped_job(self):
-        self.stub_get_job(status='stopped', outputs='terminated!')
-        self.task_instance.xcom_push = MagicMock()
-        poke = self.operator.poke({'task_instance': self.task_instance})
-        self.assertEqual(True, poke)
-        self.task_instance.xcom_push.assert_called_with(
-            key='xplenty_job_outputs', value='terminated!')
+        self.stub_get_job(status='stopped', errors='terminated!')
+        with self.assertRaises(Exception) as ctx:
+            self.operator.poke({'task_instance': self.task_instance})
+        self.assertEqual('Job failed: terminated!', str(ctx.exception))
 
     def test_poke_with_failed_job(self):
         self.stub_get_job(status='failed', errors='kaboom!')
