@@ -1,3 +1,9 @@
+Version 4.0.0, 2018-10-18
+-------------------------
+14f0948 Consider a "stopped" Xplenty job as a failure
+50aa84d Remove Python 2 support
+d88b5aa Add operator to terminate job
+
 Version 3.3.0, 2018-04-23
 -------------------------
 e144e52 Support python 2.7 and python 3
